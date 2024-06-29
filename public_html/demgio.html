@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="vi">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Ai supports education</title>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/progressbar.js/1.0.1/progressbar.min.js"></script>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                margin: 0;
+                display: flex;
+                height: 100vh;
+                background-image: url(wall.webp);
+                background-size: 100%;
+                
+            }
+
+            header .top-menu {
+                background-color: #9999ff;
+                color: white;
+                padding: 15px 0;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                width: 100%;
+                position: fixed;
+                top: 0;
+                left: 0;
+                z-index: 1000;
+
+            }
+
+            header .top-menu .logo {
+                margin-left: 20px;
+                font-size: 24px;
+                font-weight: bold;
+            }
+
+            header .top-menu nav ul {
+                list-style-type: none;
+                margin: 0;
+                padding: 0;
+                display: flex;
+            }
+
+            header .top-menu nav ul li {
+                margin-right: 20px;
+            }
+
+            header .top-menu nav ul li a {
+                color: white;
+                text-decoration: none;
+                font-weight: bold;
+            }
+            .sidebar {
+                background-color: #f4f4f4;
+                width: 200px;
+                padding: 20px;
+                box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.5);
+            }
+
+            .sidebar h2 {
+                margin-top: 0;
+            }
+
+            .sidebar ul {
+                list-style-type: none;
+                padding: 0;
+            }
+
+            .sidebar ul li {
+                margin: 10px 0;
+            }
+
+            .sidebar ul li a {
+                text-decoration: none;
+                color: #333;
+            }
+            main {
+                margin-top: 100px;
+                margin-left: 400px;
+            }
+
+            .timer-container {
+                color: white;
+                text-align: center;
+                margin-top: 20px;
+            }
+
+            #circle-container {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                margin-bottom: 20px;
+            }
+
+            #timer {
+                font-size: 24px;
+                font-weight: bold;
+            }
+
+            #timer span {
+                color: #f4f4f4;
+            }
+
+        </style>
+    </head>
+    <body>
+        <header>
+            <div class="top-menu">
+                <div class="logo">AISE</div>
+                <nav>
+                    <ul>
+                        <li><a href="#">Trang chủ</a></li>
+                        <li><a href="#">Khóa học</a></li>
+                        <li><a href="#">Liên hệ</a></li>
+                        <li><a href="#">Đăng nhập</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </header>
+        <aside class="sidebar">
+            <div class="workspace">
+                <h2>AISE</h2>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="calendar.html">Calendar</a></li>
+                    <li><a href="demgio.html">Đếm giờ</a></li>
+                    <li><a href="amnhac.html">Âm nhạc</a></li>
+                </ul>
+            </div>
+            <div class="library">
+                <h3>Library</h3>
+                <ul>
+                    <li><a href="#">Bảng xếp hạng</a></li>
+                    <li><a href="#">Khóa học</a></li>
+                    <li><a href="#">Giải bài tập</a></li>
+                </ul>
+            </div>
+        </aside>
+        <main>
+            <div class="timer-container">
+                <h2>Bộ đếm giờ</h2>
+                <div id="setup-container">
+                    <label for="time-input">Nhập thời gian (giây):</label>
+                    <input type="number" id="time-input" min="1">
+                    <button onclick="startTimer()">Bắt đầu</button>
+                </div>
+                <div id="circle-container" style="display:none;">
+                    <div id="timer-circle"></div>
+                </div>
+                <div id="timer" style="display:none;">
+                    <span id="days"></span> ngày 
+                    <span id="hours"></span> giờ 
+                    <span id="minutes"></span> phút 
+                    <span id="seconds"></span> giây 
+                </div>
+            </div>
+
+        </main>
+
+    </body>
+</html>
+<script>
+    let timerInterval;
+    let bar;
+
+    function startTimer() {
+// Get the input value
+        const timeInput = document.getElementById('time-input').value;
+        if (!timeInput || timeInput <= 0) {
+            alert('Vui lòng nhập thời gian hợp lệ!');
+            return;
+        }
+
+        const totalSeconds = parseInt(timeInput, 10);
+        const countDownDate = new Date().getTime() + totalSeconds * 1000;
+
+// Create the circle if it doesn't exist
+        if (!bar) {
+            bar = new ProgressBar.Circle('#timer-circle', {
+                color: '#6a1b9a',
+                strokeWidth: 8,
+                trailWidth: 1,
+                easing: 'easeInOut',
+                duration: 1000,
+                from: {color: '#6a1b9a', width: 1},
+                to: {color: '#6a1b9a', width: 8},
+                step: function (state, circle) {
+                    circle.path.setAttribute('stroke', state.color);
+                    circle.path.setAttribute('stroke-width', state.width);
+                }
+            });
+            bar.text.style.fontFamily = '"Raleway", Helvetica, sans-serif';
+            bar.text.style.fontSize = '2rem';
+        }
+
+// Show the timer elements
+        document.getElementById('circle-container').style.display = 'block';
+        document.getElementById('timer').style.display = 'block';
+        document.getElementById('setup-container').style.display = 'none';
+
+// Update the count down every 1 second
+        timerInterval = setInterval(function () {
+// Get today's date and time
+            const now = new Date().getTime();
+            const distance = countDownDate - now;
+
+// Time calculations for days, hours, minutes and seconds
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+// Output the result in an element with id="timer"
+            document.getElementById('days').innerText = days;
+            document.getElementById('hours').innerText = hours;
+            document.getElementById('minutes').innerText = minutes;
+            document.getElementById('seconds').innerText = seconds;
+
+// Calculate the progress
+            const elapsedTime = totalSeconds * 1000 - distance;
+            const progress = elapsedTime / (totalSeconds * 1000);
+            bar.animate(progress); // Number from 0.0 to 1.0
+
+// If the count down is over, write some text
+            if (distance < 0) {
+                clearInterval(timerInterval);
+                document.getElementById('timer').innerText = 'Hết giờ!';
+                bar.set(1);
+            }
+        }, 1000);
+    }
+
+</script>
