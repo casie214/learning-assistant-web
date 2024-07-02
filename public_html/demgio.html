@@ -11,7 +11,7 @@
                 margin: 0;
                 display: flex;
                 height: 100vh;
-                background-image: url(wall.webp);
+                background-image: url(giaoDien2.jpg);
                 background-size: 100%;
                 
             }
@@ -83,7 +83,7 @@
             }
 
             .timer-container {
-                color: white;
+                color: #000;
                 text-align: center;
                 margin-top: 20px;
             }
@@ -101,9 +101,27 @@
             }
 
             #timer span {
-                color: #f4f4f4;
+                color: #000;
             }
-
+            #nut{
+                margin: 10px;
+                border-radius: 8px;
+                width: 100px;
+                height: 30px;
+                background-color: #ccccff;
+                border-color: #b3b3b3;
+                font-weight: bold;
+               
+            }
+            #nut:hover{
+                 box-shadow: 0px 0px 10px 0px darkgrey;
+                transform: translateY(-3px);
+            }
+            #time-input{
+                margin: 8px;
+                border-radius: 8px;
+                height: 20px;
+            }
         </style>
     </head>
     <body>
@@ -111,12 +129,12 @@
             <div class="top-menu">
                 <div class="logo">AISE</div>
                 <nav>
-                    <ul>
-                        <li><a href="#">Trang chủ</a></li>
+                    <!--                    <ul>-->
+<!--                        <li><a href="#">Trang chủ</a></li>
                         <li><a href="#">Khóa học</a></li>
                         <li><a href="#">Liên hệ</a></li>
                         <li><a href="#">Đăng nhập</a></li>
-                    </ul>
+                    </ul>-->
                 </nav>
             </div>
         </header>
@@ -127,16 +145,16 @@
                     <li><a href="index.html">Home</a></li>
                     <li><a href="calendar.html">Calendar</a></li>
                     <li><a href="demgio.html">Đếm giờ</a></li>
-                    <li><a href="amnhac.html">Âm nhạc</a></li>
+                   
                 </ul>
             </div>
             <div class="library">
-                <h3>Library</h3>
+<!--                <h3>Library</h3>
                 <ul>
-                    <li><a href="#">Bảng xếp hạng</a></li>
+                   
                     <li><a href="#">Khóa học</a></li>
-                    <li><a href="#">Giải bài tập</a></li>
-                </ul>
+               
+                </ul>-->
             </div>
         </aside>
         <main>
@@ -145,7 +163,7 @@
                 <div id="setup-container">
                     <label for="time-input">Nhập thời gian (giây):</label>
                     <input type="number" id="time-input" min="1">
-                    <button onclick="startTimer()">Bắt đầu</button>
+                    <button id="nut" onclick="startTimer()">Bắt đầu</button>
                 </div>
                 <div id="circle-container" style="display:none;">
                     <div id="timer-circle"></div>
