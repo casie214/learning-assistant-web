@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Sơ Đồ Tư Duy</title>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/gojs/2.1.56/go.js"></script>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                margin: 0;
+                display: flex;
+                height: 1500px;
+                background-image: url(giaoDien2.jpg);
+                background-size: 100%;
+            }
+            #mindmap-container {
+                width: 100%;
+                height: 500px;
+                background-color: white;
+                border: 1px solid #ccc;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+                margin-top: 20px;
+            }
+            .controls {
+                margin-top: 20px;
+            }
+            .controls input, .controls button, .controls select {
+                margin-right: 10px;
+            }
+            main{
+                margin-top: 70px;
+                margin-left: 50px;
+
+            }
+            header .top-menu {
+                background-color: #000;
+                color: white;
+                padding: 15px 0;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                width: 100%;
+                position: fixed;
+                top: 0;
+                left: 0;
+                z-index: 1000;
+
+            }
+            .calendar{
+                width: 1050px;
+
+            }
+            header .top-menu .logo {
+                margin-left: 20px;
+                font-size: 24px;
+                font-weight: bold;
+            }
+
+            header .top-menu nav ul {
+                list-style-type: none;
+                margin: 0;
+                padding: 0;
+                display: flex;
+            }
+
+            header .top-menu nav ul li {
+                margin-right: 20px;
+            }
+
+            header .top-menu nav ul li a {
+                color: white;
+                text-decoration: none;
+                font-weight: bold;
+            }
+            .sidebar {
+                margin-top: 10px;
+                background-color: #f4f4f4;
+                width: 200px;
+                box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.5);
+                line-height: 30px;
+                display: block;
+            }
+            .workspace ul li{
+                padding: 15px;
+                padding-left: 20px;
+            }
+            .workspace ul li:hover{
+                display:block;
+                background-color: #ccc;
+                width: auto;
+                height: auto;
+            }
+
+            .sidebar h2 {
+                margin-top: 0;
+            }
+
+            .sidebar ul {
+                list-style-type: none;
+                padding: 0;
+            }
+
+            .sidebar ul li {
+                margin: 10px 0;
+            }
+
+            .sidebar ul li a {
+                text-decoration: none;
+                color: #333;
+            }
+            #luu, #themy,  #parent-node-select{
+                background-color: #ccccff;
+                color: #000;
+                border-radius: 5px;
+                width: 100px;
+                height: 30px;
+                font-weight: bold;
+                border-color: #ccc;
+            }
+            #themy:hover{
+
+                transform: translateY(-3px);
+            }
+            #luu:hover{
+
+                transform: translateY(-3px);
+            }
+        </style>
+    </head>
+    <body>
+        <header>
+            <div class="top-menu">
+                <div class="logo">AISE</div>
+                <nav>
+                    <ul>
+                        <!--                        <li><a href="index.html">Home</a></li>
+                                                <li><a href="calendar.html">Calendar</a></li>
+                                                <li><a href="demgio.html">Đếm giờ</a></li>-->
+                    </ul>
+                </nav>
+            </div>
+        </header>
+        <aside class="sidebar">
+            <div class="workspace">
+                <h2>AISE</h2>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="calendar.html">Calendar</a></li>
+                    <li><a href="demgio.html">Đếm giờ</a></li>
+                    <li><a href="sodotuduy.html">Tạo Mindmap</a></li>
+                    <li><a href="khoahoc.html">Khóa học</a></li>
+                </ul>
+            </div>
+            <div class="library">
+
+            </div>
+        </aside>
+        <main>
+            <h1>Sơ Đồ Tư Duy</h1>
+            <div class="controls">
+                <button id="luu" onclick="saveMindmap()">Lưu sơ đồ</button>
+                <input type="file" id="load-file" accept=".json" onchange="loadMindmap(event)">
+                <select id="parent-node-select"></select>
+                <input type="file" id="image-file" accept="image/*" >
+                <button id="themy" onclick="addNode()">Thêm ý mới</button>
+            </div>
+            <div id="mindmap-container"></div>
+        </main>
+
+        <script>
+            function init() {
+                const $ = go.GraphObject.make;
+
+                const diagram = $(go.Diagram, "mindmap-container", {
+                    initialAutoScale: go.Diagram.Uniform,
+                    layout: $(go.TreeLayout, {angle: 90, layerSpacing: 35}),
+                    "undoManager.isEnabled": true // Cho phép hoàn tác và làm lại
+                });
+
+                diagram.nodeTemplate =
+                        $(go.Node, "Horizontal",
+                                {background: "#000"},
+                                $(go.Picture,
+                                        {margin: 10, width: 50, height: 50, background: "white"},
+                                        new go.Binding("source")),
+                                $(go.TextBlock, "Default Text",
+                                        {margin: 12, stroke: "white", font: "bold 16px sans-serif", editable: true}, // Cho phép chỉnh sửa văn bản
+                                        new go.Binding("text", "name").makeTwoWay())
+                                );
+
+                diagram.model = new go.TreeModel([
+                    {key: 1, name: "Ý chính", source: ""},
+                    {key: 2, parent: 1, name: "Ý phụ 1", source: ""},
+                    {key: 3, parent: 1, name: "Ý phụ 2", source: ""}
+                ]);
+
+                window.diagram = diagram; // Lưu tham chiếu sơ đồ để sử dụng sau này
+                populateParentSelect();
+            }
+
+            function saveMindmap() {
+                const mindmapData = window.diagram.model.toJson();
+                const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(mindmapData);
+                const downloadAnchorNode = document.createElement('a');
+                downloadAnchorNode.setAttribute("href", dataStr);
+                downloadAnchorNode.setAttribute("download", "mindmap.json");
+                document.body.appendChild(downloadAnchorNode);
+                downloadAnchorNode.click();
+                downloadAnchorNode.remove();
+            }
+
+            function loadMindmap(event) {
+                const file = event.target.files[0];
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    const mindmapData = e.target.result;
+                    window.diagram.model = go.Model.fromJson(mindmapData);
+                    populateParentSelect();
+                };
+                reader.readAsText(file);
+            }
+
+            function addNode() {
+                const diagram = window.diagram;
+                const newKey = diagram.model.nodeDataArray.length + 1;
+                const parentKey = parseInt(document.getElementById("parent-node-select").value, 10);
+                const fileInput = document.getElementById('image-file');
+                const file = fileInput.files[0];
+
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function (e) {
+                        const imageDataUrl = e.target.result;
+                        const newNodeData = {key: newKey, parent: parentKey, name: "Ý mới", source: imageDataUrl};
+                        diagram.startTransaction("add node");
+                        diagram.model.addNodeData(newNodeData);
+                        diagram.commitTransaction("add node");
+                        populateParentSelect();
+                    };
+                    reader.readAsDataURL(file);
+                } else {
+                    const newNodeData = {key: newKey, parent: parentKey, name: "Ý mới", source: ""};
+                    diagram.startTransaction("add node");
+                    diagram.model.addNodeData(newNodeData);
+                    diagram.commitTransaction("add node");
+                    populateParentSelect();
+                }
+            }
+
+            function populateParentSelect() {
+                const select = document.getElementById("parent-node-select");
+                const diagram = window.diagram;
+                select.innerHTML = "";
+                diagram.model.nodeDataArray.forEach(node => {
+                    const option = document.createElement("option");
+                    option.value = node.key;
+                    option.text = node.name;
+                    select.add(option);
+                });
+            }
+
+            document.addEventListener("DOMContentLoaded", init);
+        </script>
+    </body>
+</html>

@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/ClientSide/html.html to edit this template
+-->
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <style>
+            .timer {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                font-size: 4rem;
+                font-family: Arial, sans-serif;
+                margin: 30px;
+            }
+
+            .timer div {
+                padding: 0 0.3em;
+            }
+            #startButton, #pauseButton, #restartButton{
+                background-color: #ccccff;
+                color: #000;
+                border-radius: 5px;
+                width: 130px;
+                height: 30px;
+                font-weight: bold;
+                border-color: #ccc;
+                margin-left: 10px;
+            }
+            #startButton:hover{
+                transform: translateY(-3px);
+            }
+            #pauseButton:hover{
+                transform: translateY(-3px);
+            }
+            #restartButton:hover{
+                transform: translateY(-3px);
+            }
+        </style>
+    </head>
+    <body>
+        <div class="timer">
+            <div id="minutes">15</div>
+            <div>:</div>
+            <div id="seconds">00</div>
+        </div>
+
+        <div class="timer">    
+            <button id="startButton">Start Timer</button>
+            <button id="pauseButton">Pause Timer</button>
+            <button id="restartButton">Restart Timer</button>
+        </div>
+        <audio id="notification-sound" src="livechat-129007.mp3" preload="auto"></audio>
+    </body>
+</html>
+<script>
+    // Set the time limit in minutes
+    let timeLimit = 15 * 60; // 25 minutes in seconds
+    let timer; // Variable to hold the interval timer
+
+// Get references to the timer elements
+    const minutesDisplay = document.getElementById('minutes');
+    const secondsDisplay = document.getElementById('seconds');
+    const startButton = document.getElementById('startButton');
+    const pauseButton = document.getElementById('pauseButton');
+    const restartButton = document.getElementById('restartButton');
+    const notificationSound = document.getElementById('notification-sound');
+
+// Function to start the countdown
+    function startTimer() {
+        timer = setInterval(function () {
+            // Calculate minutes and seconds
+            let minutes = Math.floor(timeLimit / 60);
+            let seconds = timeLimit % 60;
+
+            // Display the time
+            minutesDisplay.textContent = minutes < 10 ? '0' + minutes : minutes;
+            secondsDisplay.textContent = seconds < 10 ? '0' + seconds : seconds;
+
+            // Check if time has run out
+            if (timeLimit <= 0) {
+                clearInterval(timer); // Stop the timer
+                notificationSound.play();
+                alert('Time is up!'); // Optional: show an alert or execute another function
+            }
+
+            // Decrease the time limit
+            timeLimit--;
+
+        }, 1000); // Update every second
+    }
+
+// Event listener for the start button
+    startButton.addEventListener('click', function () {
+        startTimer(); // Start the countdown timer
+    });
+
+// Event listener for the pause button
+    pauseButton.addEventListener('click', function () {
+        clearInterval(timer); // Pause the timer
+    });
+
+// Event listener for the restart button
+    restartButton.addEventListener('click', function () {
+        clearInterval(timer); // Stop the current timer
+        timeLimit = 15 * 60; // Reset time limit to 25 minutes
+        minutesDisplay.textContent = '15';
+        secondsDisplay.textContent = '00';
+    });
+
+
+</script>

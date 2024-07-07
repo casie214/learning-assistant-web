@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/ClientSide/html.html to edit this template
+-->
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <style>
+            .card {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: flex-start; /* Hoặc use `center`, `flex-start`, `flex-end`, etc. tùy nhu cầu */
+            }
+            .card p {
+                font-size: 17px;
+                font-weight: 400;
+                line-height: 20px;
+                color: #000;
+                display: inline-block;
+            }
+
+            .card p.small {
+                font-size: 14px;
+            }
+
+            .go-corner {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                position: absolute;
+                width: 32px;
+                height: 32px;
+                overflow: hidden;
+                top: 0;
+                right: 0;
+                background-color: #ccccff;
+                border-radius: 0 4px 0 32px;
+            }
+
+            .go-arrow {
+                margin-top: -4px;
+                margin-right: -4px;
+                color: white;
+                font-family: courier, sans;
+            }
+
+            .card1 {
+                display: block;
+                position: relative;
+                max-width: 262px;
+                background-color: #ffffff;
+                border-radius: 4px;
+                padding: 32px 24px;
+                margin: 12px;
+                text-decoration: none;
+                z-index: 0;
+                overflow: hidden;
+            }
+
+            .card1:before {
+                content: "";
+                position: absolute;
+                z-index: -1;
+                top: 0;
+                right: -16px;
+                background: #ccccff;
+                height: 32px;
+                width: 32px;
+                border-radius: 32px;
+                transform: scale(1);
+                transform-origin: 50% 50%;
+                transition: transform 0.25s ease-out;
+            }
+
+            .card1:hover:before {
+                transform: scale(30);
+            }
+
+            .card1:hover p {
+                transition: all 0.3s ease-out;
+             
+                color: #000;
+            }
+
+            .card1:hover h3 {
+                transition: all 0.3s ease-out;
+                color: #000;
+            }
+
+            .card2 {
+                display: block;
+                top: 0px;
+                position: relative;
+                max-width: 262px;
+                background-color: #ccccff;
+                border-radius: 4px;
+                padding: 32px 24px;
+                margin: 12px;
+                text-decoration: none;
+                z-index: 0;
+                overflow: hidden;
+                border: 1px solid #ccccff;
+            }
+
+            .card2:hover {
+                transition: all 0.2s ease-out;
+                box-shadow: 0px 4px 8px rgba(38, 38, 38, 0.2);
+                top: -4px;
+                border: 1px solid #ccc;
+                background-color: #000;
+            }
+
+            .card2:before {
+                content: "";
+                position: absolute;
+                z-index: -1;
+                top: -16px;
+                right: -16px;
+                background: #ccccff;
+                height: 32px;
+                width: 32px;
+                border-radius: 32px;
+                transform: scale(2);
+                transform-origin: 50% 50%;
+                transition: transform 0.15s ease-out;
+            }
+
+            .card2:hover:before {
+                transform: scale(3);
+            }
+
+            .card3 {
+                display: block;
+                top: 0px;
+                position: relative;
+                max-width: 262px;
+                background-color: #000;
+                border-radius: 4px;
+                padding: 32px 24px;
+                margin: 12px;
+                text-decoration: none;
+                overflow: hidden;
+                border: 1px solid #000;
+            }
+
+            .card3 .go-corner {
+                opacity: 0.7;
+            }
+
+            .card3:hover {
+                border: 1px solid #ccccff;
+                box-shadow: 0px 0px 999px 999px rgba(255, 255, 255, 0.5);
+                z-index: 500;
+            }
+
+            .card3:hover p {
+                color: #ccccff;
+            }
+
+            .card3:hover .go-corner {
+                transition: opactiy 0.3s linear;
+                opacity: 1;
+            }
+
+            .card4 {
+                display: block;
+                top: 0px;
+                position: relative;
+                max-width: 262px;
+                background-color: #000;
+                border-radius: 4px;
+                padding: 32px 24px;
+                margin: 12px;
+                text-decoration: none;
+                overflow: hidden;
+                border: 1px solid #ccc;
+            }
+
+            .card4 .go-corner {
+                background-color: #ccccff;
+                height: 100%;
+                width: 16px;
+                padding-right: 9px;
+                border-radius: 0;
+                transform: skew(6deg);
+                margin-right: -36px;
+                align-items: start;
+                background-image: linear-gradient(-45deg, #8f479a 1%, #dc2a74 100%);
+            }
+
+            .card4 .go-arrow {
+                transform: skew(-6deg);
+                margin-left: -2px;
+                margin-top: 9px;
+                opacity: 0;
+            }
+
+            .card4:hover {
+                border: 1px solid #000;
+            }
+
+            .card4 h3 {
+                margin-top: 8px;
+            }
+
+            .card4:hover .go-corner {
+                margin-right: -12px;
+            }
+
+            .card4:hover .go-arrow {
+                opacity: 1;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="card">
+            <a class="card1" href="https://www.udemy.com/course/graphic-design-masterclass-learn-great-design/">
+                <p>Graphic Design Masterclass - Learn GREAT Design</p>
+                <p class="small">Tìm hiểu về các nguyên tắc thiết kế, kỹ thuật chỉnh sửa không phá hủy trong Adobe Photoshop, và thiết kế bố cục.
+</p>
+                <div class="go-corner" href="https://www.udemy.com/course/graphic-design-masterclass-learn-great-design/">
+                    <div class="go-arrow">
+                        →
+                    </div>
+                </div>
+            </a>
+
+            <a class="card1" href="https://www.udemy.com/course/graphic-design-masterclass-intermediate-the-next-level/">
+                <p>Graphic Design Masterclass Intermediate: The NEXT Level</p>
+                <p class="small"> Nâng cao kỹ năng thiết kế đồ họa với các bài học về thiết kế logo, chỉnh sửa ảnh, và xây dựng portfolio.</p>
+                <div class="go-corner" href="https://www.udemy.com/course/graphic-design-masterclass-intermediate-the-next-level/">
+                    <div class="go-arrow">
+                        →
+                    </div>
+                </div>
+            </a>
+
+            <a class="card1" href="https://www.udemy.com/course/adobe-cc-masterclass-photoshop-illustrator-xd-indesign/">
+                <p>Adobe CC Masterclass: Photoshop, Illustrator, XD & InDesign</p>
+                <p class="small">Học cách sử dụng toàn bộ bộ công cụ Adobe Creative Cloud, bao gồm Illustrator, Photoshop, XD, và InDesign.
+</p>
+                <div class="go-corner" href="https://www.udemy.com/course/adobe-cc-masterclass-photoshop-illustrator-xd-indesign/">
+                    <div class="go-arrow">
+                        →
+                    </div>
+                </div>
+            </a>
+
+            <a class="card1" href="https://www.udemy.com/course/complete-graphics-design-course-for-beginner-to-advanced/">
+                <p>Complete Graphics Design Course for Beginner to Advanced</p>
+                <p class="small"> Khóa học toàn diện từ cơ bản đến nâng cao về thiết kế đồ họa, sử dụng Adobe Photoshop và Illustrator.
+</p>
+                <div class="go-corner" href="https://www.udemy.com/course/complete-graphics-design-course-for-beginner-to-advanced/">
+                    <div class="go-arrow">
+                        →
+                    </div>
+                </div>
+            </a>
+
+            <a class="card1" href="https://www.udemy.com/course/graphic-design-mastery-the-full-branding-design-process/">
+                <p>Graphic Design Mastery: The FULL Branding & Design Process</p>
+                <p class="small">Khám phá toàn bộ quy trình thiết kế thương hiệu từ logo, quảng cáo, truyền thông xã hội, đến thiết kế trang web.</p>
+                <div class="go-corner" href="https://www.udemy.com/course/graphic-design-mastery-the-full-branding-design-process/">
+                    <div class="go-arrow">
+                        →
+                    </div>
+                </div>
+            </a>
+             <a class="card1" href="https://www.udemy.com/course/graphic-design-bootcamps-part-1-training/">
+                <p>Graphic Design Bootcamps: Part 1 Training</p>
+                <p class="small">Khám phá toàn bộ quy trình thiết kế thương hiệu từ logo, quảng cáo, truyền thông xã hội, đến thiết kế trang web.</p>
+                <div class="go-corner" href="https://www.udemy.com/course/graphic-design-bootcamps-part-1-training/">
+                    <div class="go-arrow">
+                        →
+                    </div>
+                </div>
+             </a><!-- comment -->
+              <a class="card1" href="https://www.udemy.com/course/graphic-design-for-complete-beginners/">
+                <p>Graphic Design For Complete Beginners</p>
+                <p class="small">Khám phá toàn bộ quy trình thiết kế thương hiệu từ logo, quảng cáo, truyền thông xã hội, đến thiết kế trang web.</p>
+                <div class="go-corner" href="https://www.udemy.com/course/graphic-design-for-complete-beginners/">
+                    <div class="go-arrow">
+                        →
+                    </div>
+                </div>
+            </a>
+        </div>
+    </body>
+</html>

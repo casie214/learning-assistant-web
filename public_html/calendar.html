@@ -14,11 +14,11 @@
                 background-size: 100%;
             }
             main{
-                margin-top: 100px;
+                margin-top: 70px;
                 margin-left: 50px;
             }
             header .top-menu {
-                background-color: #9999ff;
+                background-color: #000;
                 color: white;
                 padding: 15px 0;
                 display: flex;
@@ -57,12 +57,25 @@
                 text-decoration: none;
                 font-weight: bold;
             }
-            .sidebar {
+           .sidebar {
+                margin-top: 10px;
                 background-color: #f4f4f4;
                 width: 200px;
-                padding: 20px;
                 box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.5);
+                line-height: 30px;
+                display: block;
             }
+            .workspace ul li{                
+                padding: 15px;
+                padding-left: 20px;
+            }
+            .workspace ul li:hover{
+                display:block;
+                background-color: #ccc;
+                width: auto;
+                height: auto;
+            }
+            
 
             .sidebar h2 {
                 margin-top: 0;
@@ -105,6 +118,8 @@
                     <li><a href="index.html">Home</a></li>
                     <li><a href="calendar.html">Calendar</a></li>
                     <li><a href="demgio.html">Đếm giờ</a></li>
+                    <li><a href="sodotuduy.html">Tạo Mindmap</a></li>
+                    <li><a href="khoahoc.html">Khóa học</a></li>
                     
                 </ul>
             </div>
@@ -118,6 +133,7 @@
             </div>
         </aside>
         <main>
+            <h1>Calendar</h1>
             <center><iframe class="calendar" src="https://calendar.google.com/calendar/embed?height=600&wkst=1&ctz=Asia%2FHo_Chi_Minh&bgcolor=%23ffffff&src=a2h1YXRhbmhuZ29jODdAZ21haWwuY29t&src=YWRkcmVzc2Jvb2sjY29udGFjdHNAZ3JvdXAudi5jYWxlbmRhci5nb29nbGUuY29t&src=dmkudmlldG5hbWVzZSNob2xpZGF5QGdyb3VwLnYuY2FsZW5kYXIuZ29vZ2xlLmNvbQ&color=%23E4C441&color=%2333B679&color=%230B8043" style="border-width:0" width="800" height="600" frameborder="0" scrolling="no"></iframe></center>
         </main>
     </body>
