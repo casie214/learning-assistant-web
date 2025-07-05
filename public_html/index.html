@@ -67,14 +67,14 @@
                 line-height: 30px;
                 display: block;
             }
-            .workspace ul li{                
+            .workspace ul li{
                 padding: 15px;
                 padding-left: 20px;
             }
             .workspace ul li:hover{
                 display:block;
                 background-color: #ccc;
-               
+
             }
 
             .sidebar h2 {
@@ -87,14 +87,38 @@
             }
 
             .sidebar ul li {
-/*                margin: 10px 0;*/
+                /*                margin: 10px 0;*/
             }
 
             .sidebar ul li a {
                 text-decoration: none;
                 color: #333;
             }
+            .tabs ul li {
+                display: inline-flex;
 
+            }
+            .tabs ul li a{
+                text-decoration: none;
+                color: #000;
+                display: block;
+                text-align: center;
+                padding: 14px 16px;
+                background-color: #cccccc;
+                margin: -3px;
+
+
+            }
+            .tabs ul li :hover{
+                background-color: #ccccff;
+
+            }
+            .frame{
+                width: 1100px;
+                height: 550px;
+                border-radius: 8px;
+                display: block;
+            }
         </style>
     </head>
     <body>
@@ -131,7 +155,13 @@
         </aside>
         <main>
             <h1>AISE - AI supports education</h1>
-            <h5></h5>
+            <div class="tabs">
+                <ul>
+                    <li><a href="vark-test.html" target="it">VARK</a></li>
+                    
+                </ul>
+            </div>
+            <iframe class="frame" name="it" ></iframe>
         </main>
     </body>
 </html>
